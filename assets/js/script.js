@@ -1,6 +1,7 @@
 // Retrieve tasks and nextId from localStorage
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
+let history = JSON.parse(localStorage.getItem("history")) || [];
 
 // Function to generate a unique task id
 function generateTaskId() {
@@ -45,9 +46,10 @@ function renderTaskList() {
   });
 
   $(".task-card").draggable({
-    revert: "invalid", // when not dropped in the right area of the UI, the item will revert back to its initial position
+    revert: "invalid",  // Ensure the card snaps back if dropped outside a valid drop target
     stack: ".task-card",
-    helper: "clone"
+    helper: "clone",
+    zIndex: 1000  // Ensure the dragged card has the highest z-index
   });
 
   $(".lane").droppable({
@@ -86,16 +88,21 @@ function handleAddTask(event) {
 // Function to handle deleting a task
 function handleDeleteTask(event) {
   const taskId = $(event.target).closest('.task-card').data('id');
-  taskList = taskList.filter(task => task.id !== taskId);
-  saveTasks();
-  renderTaskList();
+  const task = taskList.find(task => task.id === taskId);
+  if (task) {
+    history.push({ ...task, deleted: true });
+    taskList = taskList.filter(task => task.id !== taskId);
+    saveTasks();
+    renderTaskList();
+    console.log("Deleted task history:", history);
+  }
 }
 
 // Function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
   const taskId = ui.draggable.data('id');
   const newStatus = $(this).attr('id').replace('-cards', '');
-// Stop cards from being deleted if being moved back into a previous lane eg "In progress" back to "To do" or from "Done" into "to do" or "in progress" etc.
+
   taskList = taskList.map(task => {
     if (task.id === taskId) {
       return { ...task, status: newStatus };
@@ -111,6 +118,7 @@ function handleDrop(event, ui) {
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(taskList));
   localStorage.setItem("nextId", JSON.stringify(nextId));
+  localStorage.setItem("history", JSON.stringify(history));
 }
 
 // When the page loads, render the task list, add event listeners, make lanes droppable
