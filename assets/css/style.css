@@ -20,3 +20,15 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
+.border-danger {
+  border-color: red !important;
+}
+
+.border-warning {
+  border-color: orange !important;
+}
+
+.border-success {
+  border-color: green !important;
+}
