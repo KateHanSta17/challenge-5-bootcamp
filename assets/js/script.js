@@ -45,7 +45,7 @@ function renderTaskList() {
   });
 
   $(".task-card").draggable({
-    revert: "invalid",
+    revert: "invalid", // when not dropped in the right area of the UI, the item will revert back to its initial position
     stack: ".task-card",
     helper: "clone"
   });
@@ -94,8 +94,8 @@ function handleDeleteTask(event) {
 // Function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
   const taskId = ui.draggable.data('id');
-  const newStatus = $(this).attr('id');
-
+  const newStatus = $(this).attr('id').replace('-cards', '');
+// Stop cards from being deleted if being moved back into a previous lane eg "In progress" back to "To do" or from "Done" into "to do" or "in progress" etc.
   taskList = taskList.map(task => {
     if (task.id === taskId) {
       return { ...task, status: newStatus };
@@ -117,7 +117,7 @@ function saveTasks() {
 $(document).ready(function () {
   renderTaskList();
 
-  // Initialise date picker on modal show
+  // Initialize date picker on modal show
   $('#formModal').on('shown.bs.modal', function () {
     $("#task-date").datepicker({
       dateFormat: "yy-mm-dd"
