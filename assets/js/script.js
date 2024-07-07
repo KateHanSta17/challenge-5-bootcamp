@@ -14,10 +14,15 @@ function createTaskCard(task) {
   const today = dayjs();
   let cardColor = "";
 
-  if (today.isAfter(dueDate)) {
-    cardColor = "border-danger";
-  } else if (today.isSame(dueDate, 'day') || today.isSame(dueDate.add(1, 'day'), 'day')) {
-    cardColor = "border-warning";
+  // Determine card color based on swimlane and due date
+  if (task.status === "done") {
+    cardColor = "border-success";
+  } else {
+    if (today.isAfter(dueDate)) {
+      cardColor = "border-danger";
+    } else if (today.isSame(dueDate, 'day') || today.isSame(dueDate.add(1, 'day'), 'day')) {
+      cardColor = "border-warning";
+    }
   }
 
   return `
@@ -102,9 +107,22 @@ function handleDeleteTask(event) {
 function handleDrop(event, ui) {
   const taskId = ui.draggable.data('id');
   const newStatus = $(this).attr('id').replace('-cards', '');
+  const dueDate = dayjs(taskList.find(task => task.id === taskId).date);
+  const today = dayjs();
 
   taskList = taskList.map(task => {
     if (task.id === taskId) {
+      if (newStatus === 'done') {
+        ui.draggable.removeClass('border-danger border-warning').addClass('border-success');
+      }
+      else if (newStatus === 'in-progress' || 'to do') {
+        if (today.isAfter(dueDate)) {
+          ui.draggable.removeClass('border-success border-danger border-warning').addClass('border-danger');
+        }
+        else if (today.isSame(dueDate, 'day') || today.isSame(dueDate.add(1, 'day'), 'day')) {
+          ui.draggable.removeClass('border-success border-danger border-warning').addClass('border-warning');
+        }
+      }
       return { ...task, status: newStatus };
     }
     return task;
