@@ -1,6 +1,53 @@
 # 05 Third-Party APIs: Task Board
 
-## Your Task
+## PROJECT LINKS
+### GitHub Repo
+[Challenge 5 GitHub Repo](https://github.com/KateHanSta17/challenge-5-bootcamp)
+### GitHub Page 
+[Deployed Task Board](https://katehansta17.github.io/challenge-5-bootcamp/)
+### GitLab Origin
+[Third Party API's](https://git.bootcampcontent.com/University-of-Sydney/USYD-VIRT-FSF-PT-05-2024-U-LOLC/-/tree/main/05-Third-Party-APIs/02-Challenge?ref_type=heads)
+
+## HOW IT WORKS
+### Add Tasks
+- Click "Add Tasks" to open the pop up modal & submission form.
+![Click Add to activate pop up modal](./assets/css/images/add%20task%20button.jpg)
+![Click add to activate pop up modal](./assets/css/images/pop%20up%20modal.jpg)
+
+### Date Picker
+
+![Day.JS date picker opens to select date](./assets/css/images/date%20picker.jpg)
+
+- Select the appropriate due date and click "save task" to create the new task card.
+
+### Overdue danger border (red)
+
+![Overdue tasks should be red in all columns EXCEPT for "done"](./assets/css/images/Overdue%20in%20swimlanes.jpg)
+
+- Overdue tasks in any lane other than "done" will be RED.
+
+### Immenently due, 2< days - warning border (orange)
+![Tasks due in 2< days should be orange in all columns EXCEPT for "done"](./assets/css/images/Warning%20in%20swim%20lanes.jpg)
+
+- Tasks due in the next 2 days, inclusive of today, in any lane other than "done" will be ORANGE.
+
+### Done (green border by default, regardless of due date)
+![Tasks in "done" should be green regardless of due date](./assets/css/images/Done%20examples%20different%20statuses.jpg)
+
+- Tasks in "done" will be green by default, regardless of due date.
+
+### Card Stacking
+![Cards should stack as moved between lanes](./assets/css/images/taskboard.jpg)
+
+- Note that columns will stretch vertically as more cards are added to the lane. Columns should flex back as cards are moved back out.
+
+### WARNING
+
+- <mark>Cards cannot be moved back into "TO DO" column once moved into "in progress" or "done". Card will be deleted and will need to be resubmitted.</mark>
+
+---
+---
+## The Task
 
 Create a simple task board application that allows a team to manage project tasks by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
 
