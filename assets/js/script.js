@@ -54,10 +54,10 @@ function renderTaskList() {
     zIndex: 1000
   });
 
-  $(".lane").droppable({
-    accept: ".task-card",
-    drop: handleDrop
-  });
+    $(".lane").droppable({
+        accept: ".task-card",
+        drop: handleDrop
+    });
 
   $(".delete-task").on("click", handleDeleteTask);
 }
