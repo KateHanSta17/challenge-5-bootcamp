@@ -48,16 +48,16 @@ function renderTaskList() {
   });
 
   $(".task-card").draggable({
-    revert: "invalid",
-    stack: ".task-card",
-    helper: "clone",
-    zIndex: 1000
+    revert: "invalid", // Snap back to original position if not dropped in a lane
+    stack: ".task-card", // Ensure dragged card is on top
+    helper: "clone", // Create a clone of the card while dragging
+    zIndex: 1000 
   });
 
-    $(".lane").droppable({
-        accept: ".task-card",
-        drop: handleDrop
-    });
+  $(".lane").droppable({
+    accept: ".task-card", // Only accept task cards
+    drop: handleDrop // Call handleDrop function when a card is dropped
+  });
 
   $(".delete-task").on("click", handleDeleteTask);
 }
@@ -75,7 +75,7 @@ function handleAddTask(event) {
       title: title,
       desc: desc,
       date: date,
-      status: 'todo'
+      status: 'todo' // Default status is 'todo'
     };
 
     taskList.push(newTask);
